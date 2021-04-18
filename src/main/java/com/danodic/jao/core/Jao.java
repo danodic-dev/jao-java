@@ -42,10 +42,12 @@ public class Jao {
     private float scaleFactor;
 
     private IExtractor extractor;
-
     private IClock clock;
 
+    private boolean loop;
+
     public Jao() {
+        loop = false;
         clock = new StandardClock();
         layers = new ArrayList<>();
         elapsed = 0L;
@@ -84,6 +86,11 @@ public class Jao {
         for (JaoLayer layer : layers) {
             if (layer.getEvent() != null) {
                 layer.render(elapsed, args);
+            }
+        }
+        if(loop) {
+            if(isDone()) {
+                this.reset();
             }
         }
     }
@@ -265,6 +272,14 @@ public class Jao {
         cloneJao.elapsed = elapsed;
         cloneJao.scaleFactor = scaleFactor;
         return cloneJao;
+    }
+
+    public boolean isLoop() {
+        return loop;
+    }
+
+    public void setLoop(boolean loop) {
+        this.loop = loop;
     }
 
 }
