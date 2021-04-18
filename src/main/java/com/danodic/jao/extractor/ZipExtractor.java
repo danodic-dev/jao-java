@@ -14,6 +14,8 @@ import org.apache.commons.io.IOUtils;
 import com.danodic.jao.exceptions.CannotLoadJaoFileContentException;
 import com.danodic.jao.exceptions.CannotLoadJaoFileException;
 import com.danodic.jao.exceptions.ContentFileDoesNotExistException;
+import com.google.common.collect.Lists;
+import java.util.List;
 
 /**
  * This is the implementation of the extractor for zip files. The .jao file is
@@ -118,6 +120,11 @@ public class ZipExtractor implements IExtractor {
     @Override
     public String getFilename() {
         return filePath;
+    }
+    
+    @Override
+    public List<String> getFileList() {
+        return Lists.newArrayList(data.keySet());
     }
 
 }

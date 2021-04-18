@@ -11,6 +11,9 @@ import java.util.Map;
 import com.danodic.jao.exceptions.CannotLoadJaoFileContentException;
 import com.danodic.jao.exceptions.CannotLoadJaoFileException;
 import com.danodic.jao.exceptions.ContentFileDoesNotExistException;
+import com.google.common.collect.Lists;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * This is the implementation of the extractor for folders. While the .jao file
@@ -118,6 +121,11 @@ public class FolderExtractor implements IExtractor {
     @Override
     public String getFilename() {
         return rootFolder;
+    }
+
+    @Override
+    public List<String> getFileList() {
+        return Lists.newArrayList(data.keySet());
     }
 
 }

@@ -1,6 +1,7 @@
 package com.danodic.jao.extractor;
 
 import com.danodic.jao.exceptions.ContentFileDoesNotExistException;
+import java.util.List;
 
 /**
  * An extractor is a class that will parse some kind of JAO format (ex.: a .jao
@@ -36,5 +37,11 @@ public interface IExtractor {
      * @return Name of the file.
      */
     public String getFilename();
+    
+    /**
+     * Return a list with the file names.
+     * @return A list of strings with the filenames in the jao file.
+     */
+    public List<String> getFileList();
 
 }
