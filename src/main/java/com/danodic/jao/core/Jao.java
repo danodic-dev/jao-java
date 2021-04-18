@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.danodic.jao.extractor.IExtractor;
+import com.danodic.jao.renderer.IText;
+import com.danodic.jao.text.TextCollection;
 import com.danodic.jao.time.IClock;
 import com.danodic.jao.time.StandardClock;
 import java.util.stream.Collectors;
@@ -63,6 +65,10 @@ public class Jao {
      */
     public void addLayer(JaoLayer layer) {
         this.layers.add(layer);
+        if (layer.getRenderer() instanceof IText) {
+            IText renderer = (IText) layer.getRenderer();
+            TextCollection.addITextInstance(renderer, renderer.getTextId());
+        }
     }
 
     /**
@@ -88,8 +94,8 @@ public class Jao {
                 layer.render(elapsed, args);
             }
         }
-        if(loop) {
-            if(isDone()) {
+        if (loop) {
+            if (isDone()) {
                 this.reset();
             }
         }
@@ -274,12 +280,32 @@ public class Jao {
         return cloneJao;
     }
 
+    /**
+     * Checks if this instance is supposed to be loopable.
+     *
+     * @return
+     */
     public boolean isLoop() {
         return loop;
     }
 
+    /**
+     * Enables or disables loop for this instance.
+     *
+     * @param loop Defines if this jao instance should loop.
+     */
     public void setLoop(boolean loop) {
         this.loop = loop;
+    }
+
+    /**
+     * Sets the text in a layer that supports text.
+     *
+     * @param value Text to be set in the jao file.
+     * @param id ID of the text to be set.
+     */
+    public void setText(String value, String id) {
+        TextCollection.getInstances(id).forEach(r -> r.setText(value));
     }
 
 }
