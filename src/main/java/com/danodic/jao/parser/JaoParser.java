@@ -108,6 +108,7 @@ public class JaoParser {
 
 		// Parse the layers in the model extracted from the JSON
 		Jao jao = new Jao();
+                jao.setLoop(model.getLoop());
 		jao.setExtractor(extractor);
 		
 		List<JaoLayer> layers = parseLayers(jao, model.getLayers(), renderer);
