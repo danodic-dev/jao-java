@@ -46,37 +46,6 @@ public class JaoLayer {
 
     private static final String DEFAULT_EVENT_NAME = "default";
 
-    public JaoLayer clone(Jao jao) throws CannotInstantiateJaoRenderer {
-
-        // Create a new instance of the renderer
-        IRenderer cloneRenderer = null;
-        try {
-            cloneRenderer = this.renderer.clone();
-        } catch (Exception ex) {
-            throw new CannotInstantiateJaoRenderer(ex);
-        }
-
-        JaoLayer clone = new JaoLayer(jao, cloneRenderer);
-
-        // Clone each event and find the current event
-        Event cloneCurrentEvent = null;
-        Map<String, Event> cloneEvents = new HashMap<>();
-        for (Entry<String, Event> entry : events.entrySet()) {
-            Event eventClone = entry.getValue().clone(clone);
-            cloneEvents.put(entry.getKey(), eventClone);
-            if (entry.getValue() == currentEvent) {
-                cloneCurrentEvent = eventClone;
-            }
-        }
-
-        clone.events = cloneEvents;
-        clone.currentEvent = cloneCurrentEvent;
-        clone.initializers = initializers.stream().map(init -> init.clone()).collect(Collectors.toList());
-        clone.parameters.clone();
-
-        return clone;
-    }
-
     public JaoLayer(Jao jao, IRenderer rendererImpl) {
         this.jao = jao;
 
@@ -352,4 +321,43 @@ public class JaoLayer {
      * instantiated. Realitically speaking, that will happen before reaching
      * this point in case there is an issue with the renderer.
      */
+    public JaoLayer clone(Jao jao) throws CannotInstantiateJaoRenderer {
+
+        // Create a new instance of the renderer
+        IRenderer cloneRenderer = null;
+        try {
+            cloneRenderer = this.renderer.clone();
+        } catch (Exception ex) {
+            throw new CannotInstantiateJaoRenderer(ex);
+        }
+
+        JaoLayer clone = new JaoLayer(jao, cloneRenderer);
+
+        // Clone each event and find the current event
+        Event cloneCurrentEvent = null;
+        Map<String, Event> cloneEvents = new HashMap<>();
+        for (Entry<String, Event> entry : events.entrySet()) {
+            Event eventClone = entry.getValue().clone(clone);
+            cloneEvents.put(entry.getKey(), eventClone);
+            if (entry.getValue() == currentEvent) {
+                cloneCurrentEvent = eventClone;
+            }
+        }
+
+        clone.events = cloneEvents;
+        clone.currentEvent = cloneCurrentEvent;
+        clone.initializers = initializers.stream().map(init -> init.clone()).collect(Collectors.toList());
+        clone.parameters.clone();
+
+        return clone;
+    }
+
+    /**
+     * Return the parent jao instance of this layer.
+     * @return An instance of Jao in which this layer is attached to.
+     */
+    public Jao getJao() {
+        return jao;
+    }
+    
 }
