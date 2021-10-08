@@ -67,7 +67,9 @@ public class JaoLayer {
      * when the class is instantiated.
      */
     public final void initialize() {
-        initializers.forEach(event -> event.run(this));
+        for(int i=0; i<initializers.size(); i++) {
+            initializers.get(i).run(this);
+        }
     }
 
     /**

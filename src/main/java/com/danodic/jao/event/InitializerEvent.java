@@ -22,7 +22,9 @@ public class InitializerEvent extends ArrayList<IInitializer> {
      * against.
      */
     public void run(JaoLayer jaoLayer) {
-        forEach(init -> init.run(jaoLayer));
+        for(int i=0; i<size(); i++) {
+            get(i).run(jaoLayer);
+        }
     }
 
 }
