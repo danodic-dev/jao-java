@@ -2,6 +2,7 @@ package com.danodic.jao.extractor;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -25,7 +26,7 @@ import java.util.List;
 public class ZipExtractor implements IExtractor {
 
 	private String json;
-	private Map<String, byte[]> data;
+	private Map<String, ByteBuffer> data;
         private String filePath;
 
 	/**
@@ -77,7 +78,11 @@ public class ZipExtractor implements IExtractor {
 					}
 
 					// Just add the file to the entry list
-					data.put(entry.getName(), IOUtils.toByteArray(inputStream));
+					byte [] fileData = IOUtils.toByteArray(inputStream);
+                    ByteBuffer buffer = ByteBuffer.allocate(fileData.length);
+                    buffer.put(fileData);
+					data.put(entry.getName(), buffer);
+					inputStream.close();
 
 				} catch (IOException e) {
 					throw new CannotLoadJaoFileContentException(filePath, e);
@@ -107,7 +112,7 @@ public class ZipExtractor implements IExtractor {
 	public byte[] getData(String name) throws ContentFileDoesNotExistException {
 		if (!data.containsKey(name))
 			throw new ContentFileDoesNotExistException(name);
-		return data.get(name);
+		return data.get(name).array();
 	}
 
 	/**
@@ -125,6 +130,14 @@ public class ZipExtractor implements IExtractor {
     @Override
     public List<String> getFileList() {
         return Lists.newArrayList(data.keySet());
+    }
+    
+    @Override
+    public void dispose() {
+        if(data!=null) {
+            data.values().forEach(ByteBuffer::clear);
+            data = null;
+        }
     }
 
 }

@@ -44,4 +44,9 @@ public interface IExtractor {
      */
     public List<String> getFileList();
 
+    /**
+     * Removes the bytes loaded from memory.
+     */
+    public void dispose();
+
 }

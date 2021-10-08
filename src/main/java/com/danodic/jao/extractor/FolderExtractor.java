@@ -2,6 +2,7 @@ package com.danodic.jao.extractor;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -12,7 +13,6 @@ import com.danodic.jao.exceptions.CannotLoadJaoFileContentException;
 import com.danodic.jao.exceptions.CannotLoadJaoFileException;
 import com.danodic.jao.exceptions.ContentFileDoesNotExistException;
 import com.google.common.collect.Lists;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -23,7 +23,7 @@ import java.util.List;
 public class FolderExtractor implements IExtractor {
 
     private String json;
-    private Map<String, byte[]> data;
+    private Map<String, ByteBuffer> data;
     private String rootFolder;
 
     /**
@@ -90,7 +90,11 @@ public class FolderExtractor implements IExtractor {
                     if (path.startsWith("/") || path.startsWith("\\")) {
                         path = path.substring(1, path.length());
                     }
-                    data.put(path, Files.readAllBytes(Paths.get(entry.getPath())));
+
+                    byte [] fileData = Files.readAllBytes(Paths.get(entry.getPath()));
+                    ByteBuffer buffer = ByteBuffer.allocate(fileData.length);
+                    buffer.put(fileData);
+                    data.put(path, buffer);
 
                 } catch (IOException e) {
                     throw new CannotLoadJaoFileContentException(entry.getPath(), e);
@@ -108,7 +112,7 @@ public class FolderExtractor implements IExtractor {
         if (!data.containsKey(name)) {
             throw new ContentFileDoesNotExistException(name);
         }
-        return data.get(name);
+        return data.get(name).array();
     }
 
     /**
@@ -126,6 +130,14 @@ public class FolderExtractor implements IExtractor {
     @Override
     public List<String> getFileList() {
         return Lists.newArrayList(data.keySet());
+    }
+
+    @Override
+    public void dispose() {
+        if(data!=null) {
+            data.values().forEach(ByteBuffer::clear);
+            data = null;
+        }
     }
 
 }
