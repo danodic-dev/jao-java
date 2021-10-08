@@ -65,8 +65,8 @@ public class Jao {
      */
     public void addLayer(JaoLayer layer) {
         this.layers.add(layer);
-        if (layer.getRenderer() instanceof IText) {
-            IText renderer = (IText) layer.getRenderer();
+        if (layer.getRenderer().isText()) {
+            IText renderer = layer.getRenderer().getTextRenderable();
             TextCollection.addITextInstance(renderer, renderer.getTextId());
         }
     }
@@ -81,6 +81,12 @@ public class Jao {
      */
     public void addLayers(List<JaoLayer> layers) {
         this.layers.addAll(layers);
+        for (JaoLayer layer : layers) {
+            if (layer.getRenderer().isText()) {
+            IText renderer = layer.getRenderer().getTextRenderable();
+            TextCollection.addITextInstance(renderer, renderer.getTextId());
+        }
+        }
     }
 
     /**
@@ -213,7 +219,9 @@ public class Jao {
      * layers.
      */
     public void setEvent(String eventName) {
-        layers.forEach(layer -> layer.setEvent(eventName));
+        for(int i=0; i<layers.size(); i++) {
+            layers.get(i).setEvent(eventName);
+        }
     }
 
     /**
@@ -305,7 +313,15 @@ public class Jao {
      * @param id ID of the text to be set.
      */
     public void setText(String value, String id) {
-        TextCollection.getInstances(id).forEach(r -> r.setText(value));
+        int size = TextCollection.getInstances(id).size();
+        for(int i=0; i<size; i++) {
+            TextCollection.getInstances(id).get(i).setText(value);
+        }
+    }
+    
+    public void disposeExtractor() {
+        this.extractor.dispose();
+        this.extractor = null;
     }
 
 }

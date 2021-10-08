@@ -11,4 +11,6 @@ public interface IRenderer {
         public void dispose();
         public IRenderer clone();
         public void debug();
+        public boolean isText();
+        public IText getTextRenderable();
 }
