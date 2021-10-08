@@ -23,6 +23,7 @@ public class JaoBuilder {
 
 		IExtractor extractor = ExtractorFactory.getExtractor(filename);
 		Jao jao = JaoParser.parseJson(extractor.getJson(), extractor, renderer);
+		extractor = null;
 
 		return jao;
 	}
