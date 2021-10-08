@@ -40,6 +40,7 @@ public class SharedResourcePool {
      * @param name Name of data to be retrieved.
      * @return Whatever you have stored at the key specified.
      */
+    @SuppressWarnings("unchecked")
     public <T> T getData(String name) {
         return (T) data.get(name);
     }
@@ -62,6 +63,10 @@ public class SharedResourcePool {
      */
     public void addData(String key, Object value) {
         data.put(key, value);
+    }
+
+    public void removeData(String key) {
+        data.remove(key);
     }
 
 }
