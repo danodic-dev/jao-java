@@ -12,7 +12,7 @@ jobs:
       with:
         java-version: 1.8
     - name: Unit Tests
-      run: mvn compile test -Dtest=!com.danodic.jao.extractor.ExtractorTest.testExtractorFactory.*
+      run: mvn compile test
     - name: Sonarqube Scan
       run: mvn sonar:sonar -Dsonar.login=$SONAR_TOKEN
       env:
