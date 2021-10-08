@@ -6,6 +6,13 @@
     <name>Json Animation Objects</name>
     <description>A library for animating elements using Json.</description>
     <packaging>jar</packaging>
+    <distributionManagement>
+        <repository>
+          <id>danodic-dev_jao-java</id>
+          <name>danodic.dev/jao-java</name>
+          <url>https://maven.pkg.github.com/danodic-dev/jao-java</url>
+        </repository>
+     </distributionManagement>     
     <build>
         <sourceDirectory>${project.basedir}/src/main/java/</sourceDirectory>
         <testSourceDirectory>${project.basedir}/src/test/java/</testSourceDirectory>
