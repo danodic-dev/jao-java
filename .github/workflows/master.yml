@@ -14,7 +14,7 @@ jobs:
     - name: Unit Tests
       run: mvn compile test verify
     - name: Sonarqube Scan
-      run: mvn compile verify sonar:sonar -Dsonar.login=$SONAR_TOKEN
+      run: mvn verify sonar:sonar -Dsonar.login=$SONAR_TOKEN
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
