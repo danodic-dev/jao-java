@@ -8,9 +8,9 @@
     <packaging>jar</packaging>
     <distributionManagement>
         <repository>
-            <id>danodic.dev</id>
-            <name>danodic.dev repository</name>
-            <url>https://maven.pkg.github.com/danodic-dev/danodic.dev-maven-repository</url>
+            <id>danodic.dev/jao-java</id>
+            <name>danodic.dev/jao-java</name>
+            <url>https://maven.pkg.github.com/danodic/jao-java</url>
         </repository>
     </distributionManagement>
     <build>
