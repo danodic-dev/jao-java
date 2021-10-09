@@ -8,8 +8,8 @@
     <packaging>jar</packaging>
     <distributionManagement>
         <repository>
-            <id>danodic.dev/jao-java</id>
-            <name>danodic.dev/jao-java</name>
+            <id>github</id>
+            <name>GitHub Packages</name>
             <url>https://maven.pkg.github.com/danodic/jao-java</url>
         </repository>
     </distributionManagement>
