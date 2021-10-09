@@ -8,11 +8,11 @@
     <packaging>jar</packaging>
     <distributionManagement>
         <repository>
-          <id>danodic-dev_jao-java</id>
-          <name>danodic.dev/jao-java</name>
-          <url>https://maven.pkg.github.com/danodic-dev/jao-java</url>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/danodic/jao-java</url>
         </repository>
-     </distributionManagement>     
+    </distributionManagement>
     <build>
         <sourceDirectory>${project.basedir}/src/main/java/</sourceDirectory>
         <testSourceDirectory>${project.basedir}/src/test/java/</testSourceDirectory>
@@ -22,7 +22,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.5</version>
+                <version>0.8.4</version>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>
@@ -32,7 +32,6 @@
                     </execution>
                     <execution>
                         <id>report</id>
-                        <phase>prepare-package</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
@@ -44,11 +43,11 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M5</version>
                 <configuration>
-                  <excludes>
-                    <exclude>**/ExtractorTest.java</exclude>
-                  </excludes>
+                    <excludes>
+                        <exclude>**/ExtractorTest.java</exclude>
+                    </excludes>
                 </configuration>
-              </plugin>
+            </plugin>
         </plugins>
     </build>
     <properties>
@@ -57,7 +56,6 @@
         <sonar.projectKey>danodic_jao-java</sonar.projectKey>
         <sonar.organization>danodic</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <sonar.coverage.jacoco.reportPaths>${project.build.directory}/jacoco.exec</sonar.coverage.jacoco.reportPaths>
     </properties>
     <dependencies>
         <dependency>
