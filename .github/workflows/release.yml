@@ -1,4 +1,4 @@
-name: Java CI with Maven
+name: release
 on:
   push:
     tags:
@@ -20,7 +20,7 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: always()
         with:
-         files: test-results/**/*.xml
+          files: surefire-reports/junit-reports/*.xml
       - name: Sonarqube Scan
         run: mvn verify sonar:sonar -Dsonar.login=$SONAR_TOKEN -DskipTests
         env:
