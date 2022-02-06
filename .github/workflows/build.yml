@@ -17,7 +17,7 @@ jobs:
       uses: EnricoMi/publish-unit-test-result-action@v1
       if: always()
       with:
-       files: surefire-reports/junit-reports/*.xml
+       files: surefire-reports/junitreports/*.xml
     - name: Sonarqube Scan
       run: mvn verify sonar:sonar -Dsonar.login=$SONAR_TOKEN -DskipTests
       env:
